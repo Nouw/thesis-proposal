@@ -46,82 +46,126 @@
 % Math things
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
+% For citetation
+\usepackage{dirtytalk}
 \begin{document}
 % TODO: Update title
-\title{LLM for CBRN scenario generation}
-\author{Fabio Dijkshoorn}
-\affiliation{Utrecht University}
-\course{Bachelor Thesis}
-\duedate{14 February 2025}
-\professor{Unknown}
-\maketitle
-\section{Introduction}\label{sec:introduction}
-Personal Protective Equipment (PPE) is a critical component of workplace safety,
-designed to protect individuals from a wide range of hazards, including chemical,
-biological, radioactive and nuclear (CBRN) threats.
-For civil first responders, proper PPE usage is not merely a recommendation; incorrect
-use can significantly elevate health risks and cause operational delays ~\cite{world2020personal}.
-%TODO: Add example of bio-toxin event
+    \title{LLM for CBRN scenario generation}
+    \author{Fabio Dijkshoorn}
+    \affiliation{Utrecht University}
+    \course{Bachelor Thesis}
+    \duedate{24th February 2025}
+    \professor{Prof. dr. ir. Jan Broersen}
+    \maketitle
 
-Selecting the appropriate PPE for a given scenario is a complex task that requires
-extensive domain expertise.
-It requires not only a thorough understanding of the hazard, but also an interpretation
-of regulatory standards and an in-depth knowledge of material properties.
-While state-of-the-art models exist to aid in PPE selection, they often rely on
-accurate scenario description and parameters definition as input.
-This dependency makes them labor-intensive and limits their adaptability in rapidly
-evolving threat environments.
+    \section{Introduction}\label{sec:introduction}
+    Personal Protective Equipment (PPE) is a critical component of workplace safety,
+    designed to protect individuals from a wide range of hazards, including chemical,
+    biological, radioactive and nuclear (CBRN) threats.
+    For civil first responders, proper PPE usage is not merely a recommendation; incorrect
+    use can significantly elevate health risks and cause operational delays ~\cite{world2020personal}.
+    For instance, wearing multiple layers of gloves can significantly reduce dexterity,
+    prolonged use of PPE can lead to heat stress, and the viewing foils of
+    face shields (depending on the suit system) can cause light reflection and
+    refraction, making observation difficult and contributing to eye fatigue.
 
-Recent advancements in scenario generation using Large Language Models (LLMs) such as
-\textit{LLMScenario}~\cite{chang_llmscenario_2024} have shown promising results in the
-realm of autonomous vehicles, but LLMs have also shown competence in addressing challenges
-in the radioactive and nuclear domain~\cite{iob_nuclear_2024}.
-Yet their potential to support PPE selection in bio-toxin incidents remains uncharted.
+    Selecting the appropriate PPE for a given scenario is a complex task, primarily due
+    to the complicating factor that higher protection usually introduces higher
+    physiological burden.
+    Furthermore, it also requires not only a thorough understanding of the hazard, but
+    also an interpretation of regulatory standards and an in-depth knowledge of
+    material properties.
+    To aid in the selection of PPE, there exist models to simulate the physiological
+    burden ~\cite{brasser2023scenario}.
+    However, these models often rely on accurate scenario description and parameter
+    definition as input.
+    This dependency makes them labor-intensive and limits their adaptability in
+    rapidly evolving threat environments.
 
-Although current models offer valuable insights, their reliance on precise inputs
-hinders their ability to adapt to dynamic bio-toxin scenarios.
-To bridge this gap, this paper proposes an integrated framework that leverages the
-generative capabilities of LLMs and the precision of mathematical simulation models to automate and
-optimize PPE selection in hazardous bio-toxin scenarios.
+    Recent advancements in scenario generation using Large Language Models (LLMs) such as
+    \textit{LLMScenario}~\cite{chang_llmscenario_2024} have shown promising results in the
+    realm of autonomous vehicles, but LLMs have also shown competence in addressing challenges
+    in the radioactive and nuclear domain~\cite{iob_nuclear_2024}.
+    Yet their potential to support PPE selection in bio-toxin incidents remains uncharted.
 
-\section{Methodology}\label{sec:methodology}
-To realize the potential of the framework, a multi-stage process will be used to
-seamlessly integrate expert input, advanced LLM-based scenario generation and
-evaluation of the mathematical output.
-The process is divided into two primary phases, Expert Input Augmentation and Outcome
-analysis.
+    Although current models offer valuable insights, their reliance on precise inputs
+    hinders their ability to adapt to dynamic bio-toxin scenarios.
+    To bridge this gap, this paper proposes an integrated framework that leverages
+    the generative capabilities of LLMs to augment mathematical simulation models.
+    Specifically, it explores the question: How can Large Language Models (LLMs) be
+    integrated with mathematical simulation models to enhance adaptability
+    in PPE selection for dynamic bio-toxin incidents?
 
-\subsection{Expert Input Augmentation}\label{subsec:expert-input-augmentation}
-In the initial phase, a chat-based interface allows domain experts to input critical
-data such as weather conditions, biometric information, location and workload
-parameters.
-This expert provided data forms the basis for generating realistic hazard scenarios.
-The expert's input is then augmented by the LLM, by prompts.
-Two prompts techniques will be evaluated for augmenting the data, Chain-of-Thought ~\cite{wei2023chainofthoughtpromptingelicitsreasoning}
-and Few-Shot prompting ~\cite{brown2020languagemodelsfewshotlearners}.
-Additionally, Retrieval-Augmented Generation (RAG) ~\cite{lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}
-is utilized to incorporate relevant external information, ensuring that the generated
-scenarios are both comprehensive and plausible.
+    \section{Methodology}\label{sec:methodology}
+    To realize the potential of the framework, a multi-stage process will be employed
+    to integrat expert input with LLM scenario generation.
+    The system transformers unstructured expert narratives into structured
+    physiological parameters through a hybrid human-AI pipeline.
 
-\subsection{Outcome Analysis}\label{subsec:outcome-analysis}
-TODO
+    In the initial phase, a chat-based interface collects detailed hazard description
+    from domain experts.
+    For example, an expert might describe a scenario as follows, \say{a 30-year-old
+    male is running from location A to B, while wearing a PPE suit with protection level A\ldots}
+    Such narratives may include environmental factors (e.g., temperature, humidity),
+    subject parameters (e.g., age, fitness, weight), and task-specific details (e.g.,
+    workload intensity, duration).
 
-\section{Relevance}\label{sec:relevance}
+    Following data collection, the raw input is transformed to align with the
+    physiological burden model as described by Brasser ~\cite{brasser2023scenario}.
+    This transformation is the core of the framework, as it leverages the LLM not only
+    to reformat but also to augment the provided information by identifying and
+    filling missing details.
 
-This research is conducted as part of the European Union's Horizon-funded project
-EMBRACE (Grant Agreement ID: 101168322), which aims to enhance Europe's response to
-bio toxin incidents.
-Within this context, the proposed framework directly addresses the need for scalable,
-adaptive tools to optimize PPE selection in dynamic threat environments.
+    To ensure the generated scenarios are both comprehensive and plausible,
+    retrieval-augmented generation (RAG) is utilized.
+    This technique integrates relevant external information into the model's outputs, effectively grounding the
+    generated scenario in established data sources
+    ~\cite{lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}.
 
-The integration of LLMs with mathematical simulation models aligns with the project's
-focus on leveraging AI-driven technologies to improve situational awareness and
-operational decision-making.
-By automating scenario generation, parameter optimization, and result interpretation,
-this work contributes to lightening the cognitive burden on civil first responders and
-making it possible to developer training scenarios quicker.
+    Enhancing the LLM's performance further, two advanced prompting techniques will be
+    evaluated.
+    \textit{Few-Shot Prompting}, this method embeds several carefully curated examples
+    into the system prompt to guide the LLM\@.
+    Few-shot prompting enables the LLM to recognize nuanced patterns in expert narratives.
+    The inclusion of examples improves the model's ability to generate context-aware
+    and accurate outputs ~\cite{brown2020languagemodelsfewshotlearners}.
+    \textit{Chain-of-Thought (CoT) prompting}, explicitly instructs the model to break
+    down the task into a series of intermediate reasoning steps before arriving at the
+    final output.
+    By deconstructing the scenario generation process, this approach minimizes error
+    propagation and enhances logical consistency.
+    Forcing the model to articulate its reasoning not only increases transparency but
+    also improves robutness when handling complex and ambiguous inputs
+    ~\cite{wei2023chainofthoughtpromptingelicitsreasoning}.
+
+    The language model of choice is Meta's LLaMA-3.2 family.
+    LLaMA was selected primarily because of its open-source licensing, which allows
+    for the freedom to customize.
+    Furthermore, its modular and extensible architecture facilitates seamless
+    integration with RAG and prompting strategies.
+    Therefore, making it ideally suited for research environments that demand
+    adaptability and scalability ~\cite{grattafiori2024llama3herdmodels}.
+
+    Through this hybrid approach, the proposed framework is designed to produce robust,
+    detailed and contextual rich scenarios that meet the requirements of the
+    physiological burden model and the fast-changing environment of bio-toxin hazards.
+
+    \section{Relevance}\label{sec:relevance}
+
+    This research is conducted as part of the European Union's Horizon-funded project
+    EMBRACE (Grant Agreement ID: 101168322), which aims to enhance Europe's response to
+    bio toxin incidents.
+    Within this context, the proposed framework directly addresses the need for scalable,
+    adaptive tools to optimize PPE selection in dynamic threat environments.
+
+    The integration of LLMs with mathematical simulation models aligns with the project's
+    focus on leveraging AI-driven technologies to improve situational awareness and
+    operational decision-making.
+    By automating scenario generation and parameter optimization,
+    this work contributes to lightening the cognitive burden on civil first responders and
+    making it possible to developer training scenarios quicker.
 
 % citation
-\bibliography{references}
+    \bibliography{references}
 \end{document}
 
